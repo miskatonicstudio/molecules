@@ -1,24 +1,43 @@
 extends Node2D
 
-onready var main_ball = $MainBall
 onready var balls = $Balls
-var test_ball = null
+onready var main_menu = $MainMenu
+
+var ball_scene = load("res://Ball.tscn")
 
 
 func _ready():
+	generate_balls()
+	main_menu.connect("request_new_balls", self, "generate_balls")
+
+
+func _input(_event):
+	if Input.is_action_just_pressed("propell"):
+		var mouse_pos = get_viewport().get_mouse_position()
+		var main_ball = get_tree().get_nodes_in_group("main_ball")[0]
+		main_ball.propel(mouse_pos - main_ball.position)
+
+
+func generate_balls():
+	get_tree().paused = true
+	
+	for child in balls.get_children():
+		balls.remove_child(child)
+		child.queue_free()
+	
+	var main_ball = ball_scene.instance()
+	main_ball.name = "MainBall"
+	main_ball.position = OS.window_size * 0.5
+	balls.add_child(main_ball)
+	
 	var placeholder_balls = _generate_placeholder_balls(main_ball)
-	var ball_scene = load("res://Ball.tscn")
 	for pb in placeholder_balls:
 		var ball = ball_scene.instance()
 		ball.position = pb[0]
 		ball.radius = pb[1]
 		balls.add_child(ball)
-
-
-func _input(_event):
-	if Input.is_action_just_pressed("propell") and main_ball:
-		var mouse_pos = get_viewport().get_mouse_position()
-		main_ball.propel(mouse_pos - main_ball.position)
+	
+	get_tree().paused = false
 
 
 func _generate_placeholder_balls(main_ball):

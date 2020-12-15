@@ -23,9 +23,12 @@ func _ready():
 
 
 func _on_main_ball_resized(new_radius):
-	if name == "MainBall":
+	if name == "MainBall" or not is_inside_tree():
 		return
-	var main_ball = get_tree().get_nodes_in_group("main_ball")[0]
+	var main_balls = get_tree().get_nodes_in_group("main_ball")
+	if not main_balls:
+		return
+	var main_ball = main_balls[0]
 	if will_absorb(main_ball):
 		modulate = Color("#ff816a")
 	else:
