@@ -46,21 +46,41 @@ func _generate_placeholder_balls(main_ball):
 	balls.append([main_ball.position, main_ball.radius])
 	var screen_size = OS.window_size
 	
-	for i in range(40):
-		var r = null
-		var p = null
-		var found = false
-		while not found:
-			found = true
-			r = rand_range(10, 100)
-			var rand_x = rand_range(r, screen_size.x - r)
-			var rand_y = rand_range(r, screen_size.y - r)
-			p = Vector2(rand_x, rand_y)
-			for ball in balls:
-				if p.distance_to(ball[0]) <= r + ball[1]:
-					found = false
-					break
-		balls.append([p, r])
-	# Remove the main ball
+	for i in range(4):
+		var r = rand_range(100, 130)
+		var b = _generate_single_ball(r, balls)
+		balls.append(b)
+	
+	for i in range(4):
+		var r = rand_range(70, 90)
+		var b = _generate_single_ball(r, balls)
+		balls.append(b)
+	
+	for i in range(10):
+		var r = rand_range(30, 60)
+		var b = _generate_single_ball(r, balls)
+		balls.append(b)
+	
+	for i in range(50):
+		var r = rand_range(5, 20)
+		var b = _generate_single_ball(r, balls)
+		balls.append(b)
+	
 	balls.pop_front()
 	return balls
+
+
+func _generate_single_ball(r, existing_balls):
+	var screen_size = OS.window_size
+	var p = null
+	var found = false
+	while not found:
+		found = true
+		var rand_x = rand_range(r, screen_size.x - r)
+		var rand_y = rand_range(r, screen_size.y - r)
+		p = Vector2(rand_x, rand_y)
+		for ball in existing_balls:
+			if p.distance_to(ball[0]) <= r + ball[1]:
+				found = false
+				break
+	return [p, r]
