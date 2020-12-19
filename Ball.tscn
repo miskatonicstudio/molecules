@@ -4,6 +4,7 @@
 [ext_resource path="res://ball.png" type="Texture" id=2]
 
 [sub_resource type="PhysicsMaterial" id=1]
+friction = 0.0
 rough = true
 bounce = 1.0
 
@@ -27,6 +28,7 @@ shape = SubResource( 2 )
 [node name="Area" type="Area2D" parent="."]
 gravity_vec = Vector2( 0, 0 )
 linear_damp = 0.0
+angular_damp = 0.0
 
 [node name="Shape" type="CollisionShape2D" parent="Area"]
 shape = SubResource( 3 )
@@ -34,5 +36,3 @@ shape = SubResource( 3 )
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.03, 0.03 )
 texture = ExtResource( 2 )
-[connection signal="area_entered" from="Area" to="." method="_on_Area_area_entered"]
-[connection signal="area_exited" from="Area" to="." method="_on_Area_area_exited"]

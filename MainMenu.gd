@@ -3,7 +3,7 @@ extends Control
 signal request_new_balls
 
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed("ui_cancel"):
 		toggle_visibility()
 

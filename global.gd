@@ -1,7 +1,10 @@
 extends Node
 
-signal main_ball_resized (radius)
+var main_ball = null
 
 
-func main_ball_resized(radius):
-	emit_signal("main_ball_resized", radius)
+signal main_ball_resized
+
+
+func main_ball_resized():
+	emit_signal("main_ball_resized")

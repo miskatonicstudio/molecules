@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
+[ext_resource path="res://Ball.tscn" type="PackedScene" id=2]
 [ext_resource path="res://MainMenu.tscn" type="PackedScene" id=3]
 
 [sub_resource type="ConcavePolygonShape2D" id=1]
@@ -16,6 +17,31 @@ collision_layer = 3
 shape = SubResource( 1 )
 
 [node name="Balls" type="Node2D" parent="."]
+
+[node name="Main" parent="Balls" instance=ExtResource( 2 )]
+position = Vector2( 512, 300 )
+radius = 60.0
+is_main_ball = true
+
+[node name="Ball" parent="Balls" instance=ExtResource( 2 )]
+position = Vector2( 800, 300 )
+radius = 70.0
+
+[node name="Ball2" parent="Balls" instance=ExtResource( 2 )]
+position = Vector2( 200, 200 )
+radius = 40.0
+
+[node name="Ball3" parent="Balls" instance=ExtResource( 2 )]
+position = Vector2( 200, 400 )
+radius = 40.0
+
+[node name="Ball4" parent="Balls" instance=ExtResource( 2 )]
+position = Vector2( 512, 470 )
+radius = 40.0
+
+[node name="Ball5" parent="Balls" instance=ExtResource( 2 )]
+position = Vector2( 512, 130 )
+radius = 40.0
 
 [node name="MainMenu" parent="." instance=ExtResource( 3 )]
 visible = false
