@@ -23,7 +23,7 @@ position = Vector2( 512, 300 )
 radius = 60.0
 is_main_ball = true
 
-[node name="Ball" parent="Balls" instance=ExtResource( 2 )]
+[node name="Ball1" parent="Balls" instance=ExtResource( 2 )]
 position = Vector2( 800, 300 )
 radius = 70.0
 
