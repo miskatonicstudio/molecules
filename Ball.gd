@@ -41,6 +41,7 @@ func _input(_event):
 
 func adjust_color():
 	var c = self.radius / (global.main_ball.radius * 2)
+	c = clamp(c, 0, 1)
 	var color_vector = COLOR_VECTOR_MIN * c + COLOR_VECTOR_MAX * (1 - c)
 	modulate = Color(color_vector.x, color_vector.y, color_vector.z)
 
