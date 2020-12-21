@@ -15,6 +15,9 @@ const PROPELLING_FORCE = 100000
 const PROPELLING_DAMP = 0.02
 const MIN_PROPELLING = 0.01
 
+const COLOR_VECTOR_MIN = Vector3(1, 0.25, 0)
+const COLOR_VECTOR_MAX = Vector3(0, 0.75, 1)
+
 var ball_scene = load("res://Ball.tscn")
 var is_propelling = false
 
@@ -37,10 +40,9 @@ func _input(_event):
 
 
 func adjust_color():
-	if absorbs(global.main_ball):
-		modulate = Color("#ff816a")
-	else:
-		modulate = Color("#acfff7")
+	var c = self.radius / (global.main_ball.radius * 2)
+	var color_vector = COLOR_VECTOR_MIN * c + COLOR_VECTOR_MAX * (1 - c)
+	modulate = Color(color_vector.x, color_vector.y, color_vector.z)
 
 
 func set_radius(value):

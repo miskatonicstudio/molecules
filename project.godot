@@ -35,6 +35,10 @@ propel={
  ]
 }
 
+[physics]
+
+common/physics_fps=20
+
 [rendering]
 
 environment/default_clear_color=Color( 0, 0, 0, 1 )
