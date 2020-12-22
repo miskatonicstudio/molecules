@@ -1,4 +1,3 @@
-tool
 extends RigidBody2D
 
 export (float) var radius = 30.0 setget set_radius
@@ -10,8 +9,8 @@ onready var area_shape = $Area/Shape
 onready var sprite = $Sprite
 
 const MINIMAL_MAIN_BALL_RADIUS = 5
-const PROPELLING_AREA = 0.001
-const PROPELLING_FORCE = 100000
+const PROPELLING_AREA = 0.1
+const PROPELLING_FORCE = 2
 const PROPELLING_DAMP = 0.02
 const MIN_PROPELLING = 0.01
 
@@ -40,8 +39,10 @@ func _input(_event):
 
 
 func adjust_color():
-	var c = self.radius / (global.main_ball.radius * 2)
-	c = clamp(c, 0, 1)
+	var c = 1
+	if global.main_ball.radius > 0:
+		c = self.radius / (global.main_ball.radius * 2)
+		c = clamp(c, 0, 1)
 	var color_vector = COLOR_VECTOR_MIN * c + COLOR_VECTOR_MAX * (1 - c)
 	modulate = Color(color_vector.x, color_vector.y, color_vector.z)
 
@@ -96,6 +97,7 @@ func _process(delta):
 			get_viewport().get_mouse_position() - self.position,
 			delta
 		)
+	
 	if self.linear_damp > 0:
 		self.linear_damp = max(0, self.linear_damp - delta)
 	
@@ -103,7 +105,7 @@ func _process(delta):
 		queue_free()
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var overlapping_balls = []
 	for a in area_node.get_overlapping_areas():
 		overlapping_balls.append(a.get_parent())
@@ -143,7 +145,7 @@ func _physics_process(delta):
 func propel(direction: Vector2, delta: float = 1) -> void:
 	direction = direction.normalized()
 	var current_area = _radius_to_area(self.radius)
-	var propelling_area = current_area * PROPELLING_AREA
+	var propelling_area = current_area * PROPELLING_AREA * delta
 	var new_area = current_area - propelling_area
 	
 	var propelling_ball = ball_scene.instance()
@@ -156,9 +158,5 @@ func propel(direction: Vector2, delta: float = 1) -> void:
 	
 	get_parent().call_deferred("add_child_below_node", self, propelling_ball)# (self, propelling_ball)
 	
-	propelling_ball.apply_central_impulse(
-		direction * PROPELLING_FORCE * delta / propelling_area
-	)
-	self.apply_central_impulse(
-		-direction * PROPELLING_FORCE * delta / new_area
-	)
+	propelling_ball.apply_central_impulse(direction * PROPELLING_FORCE)
+	self.apply_central_impulse(-direction * PROPELLING_FORCE)
