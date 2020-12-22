@@ -7,7 +7,7 @@ var ball_scene = load("res://Ball.tscn")
 
 
 func _ready():
-#	generate_balls()
+	generate_balls()
 	main_menu.connect("request_new_balls", self, "generate_balls")
 
 
@@ -30,29 +30,23 @@ func generate_balls():
 
 
 func _generate_placeholder_balls(main_ball):
+	# Each group: number of balls, min radius, max radius
+	var BALL_GROUPS = [
+		[8, 70, 90],
+		[8, 50, 70],
+		[16, 30, 50],
+		[64, 10, 30],
+		[64, 5, 10]
+	]
 	randomize()
 	var generated_balls = []
 	generated_balls.append([main_ball.position, main_ball.radius])
 	
-	for _i in range(4):
-		var r = rand_range(100, 130)
-		var b = _generate_single_ball(r, generated_balls)
-		generated_balls.append(b)
-	
-	for _i in range(4):
-		var r = rand_range(70, 90)
-		var b = _generate_single_ball(r, generated_balls)
-		generated_balls.append(b)
-	
-	for _i in range(10):
-		var r = rand_range(30, 60)
-		var b = _generate_single_ball(r, generated_balls)
-		generated_balls.append(b)
-	
-	for _i in range(50):
-		var r = rand_range(5, 20)
-		var b = _generate_single_ball(r, generated_balls)
-		generated_balls.append(b)
+	for entry in BALL_GROUPS:
+		for _i in range(entry[0]):
+			var radius = rand_range(entry[1], entry[2])
+			var ball = _generate_single_ball(radius, generated_balls)
+			generated_balls.append(ball)
 	
 	generated_balls.pop_front()
 	return generated_balls
