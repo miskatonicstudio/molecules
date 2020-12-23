@@ -14,6 +14,7 @@ var total_ball_area = 0
 
 
 func _ready():
+	get_tree().paused = true
 	randomize()
 	main_menu.connect("request_new_balls", self, "generate_balls")
 	main_menu.connect("request_music", self, "_on_request_music")
@@ -23,6 +24,16 @@ func _ready():
 		total_ball_area += ball.area
 	# In tutorial, ensure that the biggest molecule has to be absorbed too
 	total_ball_area *= 1.5
+
+
+func _input(_event):
+	if len(message_label.text) > 20:
+		if (
+			Input.is_action_just_pressed("propel") or 
+			Input.is_action_just_pressed("ui_cancel")
+		):
+			message_label.text = ""
+			get_tree().paused = false
 
 
 func generate_balls():
@@ -80,7 +91,7 @@ func _on_main_ball_resized() -> void:
 		message_label.text = "You lost"
 	else:
 		if global.main_ball.area > total_ball_area * 0.5:
-			message_label.text = "You won"
+			message_label.text = "You won!"
 
 
 func _on_request_music(enabled: bool) -> void:
