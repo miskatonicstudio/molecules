@@ -1,14 +1,14 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://MainMenu.gd" type="Script" id=1]
-[ext_resource path="res://menu_button_style.tres" type="StyleBox" id=2]
-[ext_resource path="res://font.tres" type="DynamicFont" id=3]
+[ext_resource path="res://menu_button_style.tres" type="StyleBox" id=1]
+[ext_resource path="res://font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://scenes/MainMenu.gd" type="Script" id=3]
 
 [node name="MainMenu" type="Control"]
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -38,44 +38,44 @@ custom_constants/separation = 14
 [node name="Back" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_right = 251.0
 margin_bottom = 73.0
-custom_styles/hover = ExtResource( 2 )
-custom_styles/pressed = ExtResource( 2 )
-custom_styles/focus = ExtResource( 2 )
-custom_styles/normal = ExtResource( 2 )
-custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "Resume"
 
 [node name="New" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 87.0
 margin_right = 251.0
 margin_bottom = 160.0
-custom_styles/hover = ExtResource( 2 )
-custom_styles/pressed = ExtResource( 2 )
-custom_styles/focus = ExtResource( 2 )
-custom_styles/normal = ExtResource( 2 )
-custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "New level"
 
 [node name="Music" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 174.0
 margin_right = 251.0
 margin_bottom = 247.0
-custom_styles/hover = ExtResource( 2 )
-custom_styles/pressed = ExtResource( 2 )
-custom_styles/focus = ExtResource( 2 )
-custom_styles/normal = ExtResource( 2 )
-custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "Music: On"
 
 [node name="Quit" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 261.0
 margin_right = 251.0
 margin_bottom = 334.0
-custom_styles/hover = ExtResource( 2 )
-custom_styles/pressed = ExtResource( 2 )
-custom_styles/focus = ExtResource( 2 )
-custom_styles/normal = ExtResource( 2 )
-custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "Quit"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/New" to="." method="_on_New_pressed"]

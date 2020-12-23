@@ -16,7 +16,7 @@ const COLOR_VECTOR_MIN = Vector3(1, 0.25, 0)
 const COLOR_VECTOR_MAX = Vector3(0, 0.75, 1)
 
 var area
-var ball_scene = load("res://Ball.tscn")
+var ball_scene = load("res://scenes/Molecule.tscn")
 var is_propelling = false
 
 

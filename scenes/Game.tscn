@@ -3,8 +3,8 @@
 [ext_resource path="res://font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/Game.gd" type="Script" id=2]
 [ext_resource path="res://ambient.ogg" type="AudioStream" id=3]
-[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Ball.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/MainMenu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/Molecule.tscn" type="PackedScene" id=5]
 
 [sub_resource type="ConcavePolygonShape2D" id=1]
 segments = PoolVector2Array( 0, 0, 1280, 0, 1280, 720, 0, 720, 1280, 0, 1280, 720, 0, 0, 0, 720 )

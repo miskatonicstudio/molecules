@@ -5,7 +5,7 @@ onready var main_menu = $MainMenu
 onready var message_label = $Message/Label
 onready var music = $Music
 
-var ball_scene = load("res://Ball.tscn")
+var ball_scene = load("res://scenes/Molecule.tscn")
 var screen_size = Vector2(
 	ProjectSettings.get("display/window/size/width"),
 	ProjectSettings.get("display/window/size/height")
