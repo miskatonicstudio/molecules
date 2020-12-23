@@ -1,53 +1,53 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Main.gd" type="Script" id=1]
-[ext_resource path="res://Ball.tscn" type="PackedScene" id=2]
-[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=3]
-[ext_resource path="res://font.tres" type="DynamicFont" id=4]
-[ext_resource path="res://ambient.ogg" type="AudioStream" id=5]
+[ext_resource path="res://font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/Game.gd" type="Script" id=2]
+[ext_resource path="res://ambient.ogg" type="AudioStream" id=3]
+[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Ball.tscn" type="PackedScene" id=5]
 
 [sub_resource type="ConcavePolygonShape2D" id=1]
 segments = PoolVector2Array( 0, 0, 1280, 0, 1280, 720, 0, 720, 1280, 0, 1280, 720, 0, 0, 0, 720 )
 
-[node name="Main" type="Node2D"]
+[node name="Game" type="Node2D"]
 pause_mode = 2
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="Frame" type="Line2D" parent="."]
 points = PoolVector2Array( 0, 0, 1280, 0, 1280, 720, 0, 720, 0, 0 )
 width = 4.0
 default_color = Color( 0, 0.6, 0.701961, 0.501961 )
 
-[node name="Wall" type="StaticBody2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="."]
 collision_layer = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
 shape = SubResource( 1 )
 
 [node name="Balls" type="Node2D" parent="."]
 
-[node name="Main" parent="Balls" instance=ExtResource( 2 )]
+[node name="Main" parent="Balls" instance=ExtResource( 5 )]
 position = Vector2( 640, 360 )
 radius = 60.0
 is_main_ball = true
 
-[node name="Ball1" parent="Balls" instance=ExtResource( 2 )]
+[node name="Ball1" parent="Balls" instance=ExtResource( 5 )]
 position = Vector2( 1000, 360 )
 radius = 80.0
 
-[node name="Ball2" parent="Balls" instance=ExtResource( 2 )]
+[node name="Ball2" parent="Balls" instance=ExtResource( 5 )]
 position = Vector2( 300, 260 )
 radius = 40.0
 
-[node name="Ball3" parent="Balls" instance=ExtResource( 2 )]
+[node name="Ball3" parent="Balls" instance=ExtResource( 5 )]
 position = Vector2( 300, 460 )
 radius = 40.0
 
-[node name="Ball4" parent="Balls" instance=ExtResource( 2 )]
+[node name="Ball4" parent="Balls" instance=ExtResource( 5 )]
 position = Vector2( 640, 560 )
 radius = 40.0
 
-[node name="Ball5" parent="Balls" instance=ExtResource( 2 )]
+[node name="Ball5" parent="Balls" instance=ExtResource( 5 )]
 position = Vector2( 640, 160 )
 radius = 40.0
 
@@ -67,7 +67,7 @@ margin_left = 156.0
 margin_top = 145.0
 margin_right = 1123.0
 margin_bottom = 574.0
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 1 )
 text = "Bigger molecules absorb smaller ones.
 
 Your goal is to become the biggest molecule.
@@ -86,14 +86,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MainMenu" parent="." instance=ExtResource( 3 )]
+[node name="MainMenu" parent="." instance=ExtResource( 4 )]
 visible = false
 margin_right = 1230.0
 margin_bottom = 682.0
 rect_min_size = Vector2( 1280, 720 )
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Music" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
-stream = ExtResource( 5 )
+stream = ExtResource( 3 )
 volume_db = -20.0
 autoplay = true

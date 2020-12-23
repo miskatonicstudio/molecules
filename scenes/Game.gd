@@ -3,13 +3,14 @@ extends Node2D
 onready var balls = $Balls
 onready var main_menu = $MainMenu
 onready var message_label = $Message/Label
+onready var music = $Music
 
 var ball_scene = load("res://Ball.tscn")
 var screen_size = Vector2(
 	ProjectSettings.get("display/window/size/width"),
 	ProjectSettings.get("display/window/size/height")
 )
-# Total area of all balls
+# Total area of all molecules
 var total_ball_area = 0
 
 
@@ -95,4 +96,4 @@ func _on_main_ball_resized() -> void:
 
 
 func _on_request_music(enabled: bool) -> void:
-	$AudioStreamPlayer.stream_paused = not enabled
+	music.stream_paused = not enabled
