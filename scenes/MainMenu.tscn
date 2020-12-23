@@ -29,14 +29,15 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 514.0
+margin_left = 490.0
 margin_top = 193.0
-margin_right = 765.0
+margin_right = 790.0
 margin_bottom = 527.0
+rect_min_size = Vector2( 300, 0 )
 custom_constants/separation = 14
 
 [node name="Back" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_right = 251.0
+margin_right = 300.0
 margin_bottom = 73.0
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 1 )
@@ -47,7 +48,7 @@ text = "Resume"
 
 [node name="New" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 87.0
-margin_right = 251.0
+margin_right = 300.0
 margin_bottom = 160.0
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 1 )
@@ -58,7 +59,7 @@ text = "New level"
 
 [node name="Music" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 174.0
-margin_right = 251.0
+margin_right = 300.0
 margin_bottom = 247.0
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 1 )
@@ -69,7 +70,7 @@ text = "Music: On"
 
 [node name="Quit" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 261.0
-margin_right = 251.0
+margin_right = 300.0
 margin_bottom = 334.0
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 1 )

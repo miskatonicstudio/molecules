@@ -64,9 +64,9 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="Message"]
 margin_left = 156.0
-margin_top = 145.0
+margin_top = 163.0
 margin_right = 1123.0
-margin_bottom = 574.0
+margin_bottom = 556.0
 custom_fonts/font = ExtResource( 1 )
 text = "Bigger molecules absorb smaller ones.
 
@@ -78,8 +78,7 @@ Hold the LMB for faster propulsion.
 
 Keep in mind that propelling reduces your mass and makes you smaller.
 
-[Press LMB to continue]
-[Press ESC to show main menu]"
+[Press RMB to continue]"
 align = 1
 valign = 1
 __meta__ = {

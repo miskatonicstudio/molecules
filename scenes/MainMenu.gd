@@ -7,7 +7,7 @@ var music_enabled = true
 
 
 func _input(_event):
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("dismiss"):
 		toggle_visibility()
 
 

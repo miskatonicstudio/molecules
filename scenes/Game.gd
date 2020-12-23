@@ -29,12 +29,11 @@ func _ready():
 
 func _input(_event):
 	# Unpause the game in tutorial
+	# TODO: figure out a cleaner way to check if this is tutorial
 	if len(message_label.text) > 20:
-		if (
-			Input.is_action_just_pressed("propel") or 
-			Input.is_action_just_pressed("ui_cancel")
-		):
+		if Input.is_action_just_pressed("dismiss"):
 			message_label.text = ""
+			main_menu.hide()
 			get_tree().paused = false
 
 
