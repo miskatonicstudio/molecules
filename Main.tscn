@@ -26,28 +26,28 @@ shape = SubResource( 1 )
 [node name="Balls" type="Node2D" parent="."]
 
 [node name="Main" parent="Balls" instance=ExtResource( 2 )]
-position = Vector2( 512, 300 )
+position = Vector2( 640, 360 )
 radius = 60.0
 is_main_ball = true
 
 [node name="Ball1" parent="Balls" instance=ExtResource( 2 )]
-position = Vector2( 800, 300 )
-radius = 70.0
+position = Vector2( 1000, 360 )
+radius = 80.0
 
 [node name="Ball2" parent="Balls" instance=ExtResource( 2 )]
-position = Vector2( 200, 200 )
+position = Vector2( 300, 260 )
 radius = 40.0
 
 [node name="Ball3" parent="Balls" instance=ExtResource( 2 )]
-position = Vector2( 200, 400 )
+position = Vector2( 300, 460 )
 radius = 40.0
 
 [node name="Ball4" parent="Balls" instance=ExtResource( 2 )]
-position = Vector2( 512, 470 )
+position = Vector2( 640, 560 )
 radius = 40.0
 
 [node name="Ball5" parent="Balls" instance=ExtResource( 2 )]
-position = Vector2( 512, 130 )
+position = Vector2( 640, 160 )
 radius = 40.0
 
 [node name="Message" type="CenterContainer" parent="."]

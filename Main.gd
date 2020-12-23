@@ -15,10 +15,14 @@ var total_ball_area = 0
 
 func _ready():
 	randomize()
-#	generate_balls()
 	main_menu.connect("request_new_balls", self, "generate_balls")
 	main_menu.connect("request_music", self, "_on_request_music")
 	global.connect("main_ball_resized", self, "_on_main_ball_resized")
+	
+	for ball in balls.get_children():
+		total_ball_area += ball.area
+	# In tutorial, ensure that the biggest molecule has to be absorbed too
+	total_ball_area *= 1.5
 
 
 func generate_balls():
