@@ -80,5 +80,5 @@ rect_min_size = Vector2( 1280, 720 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
 stream = ExtResource( 5 )
-volume_db = -40.0
+volume_db = -20.0
 autoplay = true

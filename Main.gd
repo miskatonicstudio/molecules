@@ -9,11 +9,12 @@ var screen_size = Vector2(
 	ProjectSettings.get("display/window/size/width"),
 	ProjectSettings.get("display/window/size/height")
 )
-# Total area of all balls, excluding the main one
+# Total area of all balls
 var total_ball_area = 0
 
 
 func _ready():
+	randomize()
 #	generate_balls()
 	main_menu.connect("request_new_balls", self, "generate_balls")
 	main_menu.connect("request_music", self, "_on_request_music")
@@ -36,30 +37,20 @@ func generate_balls():
 	for pb in placeholder_balls:
 		var ball = ball_scene.instance()
 		ball.position = pb[0]
-		ball.radius = pb[1]
 		balls.add_child(ball)
+		ball.radius = pb[1]
 		total_ball_area += ball.area
 	balls.add_child(main_ball)
+	total_ball_area += main_ball.area
 
 
 func _generate_placeholder_balls(main_ball):
-	# Each group: number of balls, min radius, max radius
-	var BALL_GROUPS = [
-		[8, 70, 90],
-		[8, 50, 70],
-		[16, 30, 50],
-		[64, 10, 30],
-		[64, 5, 10]
-	]
-	randomize()
 	var generated_balls = []
 	generated_balls.append([main_ball.position, main_ball.radius])
 	
-	for entry in BALL_GROUPS:
-		for _i in range(entry[0]):
-			var radius = rand_range(entry[1], entry[2])
-			var ball = _generate_single_ball(radius, generated_balls)
-			generated_balls.append(ball)
+	for radius in range(72, 4, -1):
+		var ball = _generate_single_ball(float(radius), generated_balls)
+		generated_balls.append(ball)
 	
 	generated_balls.pop_front()
 	return generated_balls
@@ -84,7 +75,7 @@ func _on_main_ball_resized() -> void:
 	if global.main_ball.radius <= 0:
 		message_label.text = "You lost"
 	else:
-		if global.main_ball.area > total_ball_area:
+		if global.main_ball.area > total_ball_area * 0.5:
 			message_label.text = "You won"
 
 

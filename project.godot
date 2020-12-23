@@ -25,7 +25,6 @@ global="*res://global.gd"
 
 [debug]
 
-settings/stdout/print_fps=true
 gdscript/warnings/return_value_discarded=false
 
 [display]
