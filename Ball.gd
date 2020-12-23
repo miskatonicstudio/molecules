@@ -8,8 +8,8 @@ onready var area_node = $Area
 onready var area_shape = $Area/Shape
 onready var sprite = $Sprite
 
-const MIN_PROPELLING_AREA = 0.0004
-const MAX_PROPELLING_AREA = 0.0008
+const MIN_PROPELLING_AREA = 0.0008
+const MAX_PROPELLING_AREA = 0.0016
 const SMALL_PROPELLING_FORCE = 150
 const LARGE_PROPELLING_FORCE = 3
 const COLOR_VECTOR_MIN = Vector3(1, 0.25, 0)
