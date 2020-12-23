@@ -4,6 +4,8 @@
 
 A simple clone of Osmos, made with [Godot Engine](https://github.com/godotengine/godot).
 
+The game can be downloaded from [itch.io](https://miskatonicstudio.itch.io/molecules).
+
 ## Sounds
 
 The game uses a public domain ambient sound from [Freesound](https://freesound.org/people/PhonZz/sounds/263467/).
