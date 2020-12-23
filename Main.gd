@@ -9,15 +9,19 @@ var screen_size = Vector2(
 	ProjectSettings.get("display/window/size/width"),
 	ProjectSettings.get("display/window/size/height")
 )
+# Total area of all balls, excluding the main one
+var total_ball_area = 0
 
 
 func _ready():
 #	generate_balls()
 	main_menu.connect("request_new_balls", self, "generate_balls")
+	main_menu.connect("request_music", self, "_on_request_music")
 	global.connect("main_ball_resized", self, "_on_main_ball_resized")
 
 
 func generate_balls():
+	total_ball_area = 0
 	message_label.text = ""
 	
 	for child in balls.get_children():
@@ -27,7 +31,6 @@ func generate_balls():
 	var main_ball = ball_scene.instance()
 	main_ball.is_main_ball = true
 	main_ball.position = screen_size * 0.5
-	balls.add_child(main_ball)
 	
 	var placeholder_balls = _generate_placeholder_balls(main_ball)
 	for pb in placeholder_balls:
@@ -35,6 +38,8 @@ func generate_balls():
 		ball.position = pb[0]
 		ball.radius = pb[1]
 		balls.add_child(ball)
+		total_ball_area += ball.area
+	balls.add_child(main_ball)
 
 
 func _generate_placeholder_balls(main_ball):
@@ -75,7 +80,13 @@ func _generate_single_ball(r, existing_balls):
 	return [p, r]
 
 
-func _on_main_ball_resized():
+func _on_main_ball_resized() -> void:
 	if global.main_ball.radius <= 0:
 		message_label.text = "You lost"
-		print("LOST")
+	else:
+		if global.main_ball.area > total_ball_area:
+			message_label.text = "You won"
+
+
+func _on_request_music(enabled: bool) -> void:
+	$AudioStreamPlayer.stream_paused = not enabled

@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Ball.tscn" type="PackedScene" id=2]
 [ext_resource path="res://MainMenu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://ambient.ogg" type="AudioStream" id=5]
 
 [sub_resource type="ConcavePolygonShape2D" id=1]
 segments = PoolVector2Array( 0, 0, 1280, 0, 1280, 720, 0, 720, 1280, 0, 1280, 720, 0, 0, 0, 720 )
@@ -75,3 +76,9 @@ visible = false
 margin_right = 1230.0
 margin_bottom = 682.0
 rect_min_size = Vector2( 1280, 720 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 5 )
+volume_db = -40.0
+autoplay = true

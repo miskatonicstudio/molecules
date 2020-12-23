@@ -29,37 +29,48 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 588.0
-margin_top = 266.0
-margin_right = 691.0
-margin_bottom = 453.0
+margin_left = 514.0
+margin_top = 193.0
+margin_right = 765.0
+margin_bottom = 527.0
 custom_constants/separation = 14
 
 [node name="Back" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_right = 103.0
-margin_bottom = 53.0
+margin_right = 251.0
+margin_bottom = 73.0
 custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 2 )
 custom_styles/focus = ExtResource( 2 )
 custom_styles/normal = ExtResource( 2 )
 custom_fonts/font = ExtResource( 3 )
-text = "Back"
+text = "Resume"
 
 [node name="New" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 67.0
-margin_right = 103.0
-margin_bottom = 120.0
+margin_top = 87.0
+margin_right = 251.0
+margin_bottom = 160.0
 custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 2 )
 custom_styles/focus = ExtResource( 2 )
 custom_styles/normal = ExtResource( 2 )
 custom_fonts/font = ExtResource( 3 )
-text = "New"
+text = "New level"
+
+[node name="Music" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 174.0
+margin_right = 251.0
+margin_bottom = 247.0
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/focus = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+custom_fonts/font = ExtResource( 3 )
+text = "Music: On"
 
 [node name="Quit" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 134.0
-margin_right = 103.0
-margin_bottom = 187.0
+margin_top = 261.0
+margin_right = 251.0
+margin_bottom = 334.0
 custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 2 )
 custom_styles/focus = ExtResource( 2 )
@@ -68,4 +79,5 @@ custom_fonts/font = ExtResource( 3 )
 text = "Quit"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/New" to="." method="_on_New_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Music" to="." method="_on_Music_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]

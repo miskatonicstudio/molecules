@@ -1,6 +1,9 @@
 extends Control
 
 signal request_new_balls
+signal request_music
+
+var music_enabled = true
 
 
 func _input(_event):
@@ -24,3 +27,10 @@ func toggle_visibility():
 func _on_New_pressed():
 	emit_signal("request_new_balls")
 	toggle_visibility()
+
+
+func _on_Music_pressed():
+	music_enabled = not music_enabled
+	var text = "Music: On" if music_enabled else "Music: Off"
+	$CenterContainer/VBoxContainer/Music.text = text
+	emit_signal("request_music", music_enabled)

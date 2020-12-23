@@ -24,7 +24,6 @@ func _ready():
 	shape.shape = CircleShape2D.new()
 	area_shape.shape = CircleShape2D.new()
 	if is_main_ball:
-		remove_from_group("spheres")
 		global.main_ball = self
 		set_radius(radius)
 	else:
@@ -63,6 +62,8 @@ func set_radius(value):
 	
 	if radius <= 0:
 		queue_free()
+		if is_main_ball:
+			global.main_ball = null
 
 
 func _area_to_radius(a: float) -> float:
@@ -75,13 +76,13 @@ func _radius_to_area(r: float) -> float:
 	return PI * pow(r, 2)
 
 
-func add_area(area: float, area_linear_velocity: Vector2) -> void:
-	if area <= 0:
+func add_area(added_area: float, area_linear_velocity: Vector2) -> void:
+	if added_area <= 0:
 		return
-	var new_area = self.area + area
+	var new_area = self.area + added_area
 	var new_velocity = (
 		self.linear_velocity * self.area / new_area +
-		area_linear_velocity * area / new_area
+		area_linear_velocity * added_area / new_area
 	)
 	var new_radius = _area_to_radius(new_area)
 	self.radius = new_radius
