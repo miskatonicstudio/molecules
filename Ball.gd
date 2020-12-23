@@ -15,6 +15,7 @@ const LARGE_PROPELLING_FORCE = 3
 const COLOR_VECTOR_MIN = Vector3(1, 0.25, 0)
 const COLOR_VECTOR_MAX = Vector3(0, 0.75, 1)
 
+var area
 var ball_scene = load("res://Ball.tscn")
 var is_propelling = false
 
@@ -23,6 +24,7 @@ func _ready():
 	shape.shape = CircleShape2D.new()
 	area_shape.shape = CircleShape2D.new()
 	if is_main_ball:
+		remove_from_group("spheres")
 		global.main_ball = self
 		set_radius(radius)
 	else:
@@ -47,6 +49,7 @@ func adjust_color():
 
 func set_radius(value):
 	radius = value
+	area = _radius_to_area(value)
 	if is_inside_tree():
 		shape.shape.radius = value
 		area_shape.shape.radius = value
@@ -75,10 +78,9 @@ func _radius_to_area(r: float) -> float:
 func add_area(area: float, area_linear_velocity: Vector2) -> void:
 	if area <= 0:
 		return
-	var current_area = _radius_to_area(self.radius)
-	var new_area = current_area + area
+	var new_area = self.area + area
 	var new_velocity = (
-		self.linear_velocity * current_area / new_area +
+		self.linear_velocity * self.area / new_area +
 		area_linear_velocity * area / new_area
 	)
 	var new_radius = _area_to_radius(new_area)
@@ -105,14 +107,13 @@ func _process(_delta):
 		# TODO: this should not happen, but it happens sometimes
 		if radius_difference < 0:
 			continue
-		var small_area = _radius_to_area(small.radius)
 		
 		var small_radius_reduced = max(
 			0, small.radius - radius_difference
 		)
 		
 		var small_area_reduced = _radius_to_area(small_radius_reduced)
-		var area_delta = small_area - small_area_reduced
+		var area_delta = small.area - small_area_reduced
 		
 		small.radius = small_radius_reduced
 		self.add_area(area_delta, small.linear_velocity)
@@ -123,11 +124,10 @@ func propel(direction: Vector2) -> void:
 		return
 	
 	direction = direction.normalized()
-	var current_area = _radius_to_area(self.radius)
-	var propelling_area = current_area * rand_range(
+	var propelling_area = self.area * rand_range(
 		MIN_PROPELLING_AREA, MAX_PROPELLING_AREA
 	)
-	var new_area = current_area - propelling_area
+	var new_area = self.area - propelling_area
 	
 	self.radius = _area_to_radius(new_area)
 	
