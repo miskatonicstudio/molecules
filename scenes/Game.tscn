@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/Game.gd" type="Script" id=2]
-[ext_resource path="res://ambient.ogg" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/ambient.ogg" type="AudioStream" id=3]
 [ext_resource path="res://scenes/MainMenu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Molecule.tscn" type="PackedScene" id=5]
 

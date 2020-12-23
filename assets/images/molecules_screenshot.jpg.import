@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/molecule.png-598d7aaa80c8f5ead61125542ec19538.stex"
+path="res://.import/molecules_screenshot.jpg-9fbad2968ef1e81ec92380f2e124a791.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://molecule.png"
-dest_files=[ "res://.import/molecule.png-598d7aaa80c8f5ead61125542ec19538.stex" ]
+source_file="res://assets/images/molecules_screenshot.jpg"
+dest_files=[ "res://.import/molecules_screenshot.jpg-9fbad2968ef1e81ec92380f2e124a791.stex" ]
 
 [params]
 

@@ -17,11 +17,11 @@ _global_script_class_icons={
 
 config/name="Molecules"
 run/main_scene="res://scenes/Game.tscn"
-config/icon="res://icon.png"
+config/icon="res://assets/images/icon.png"
 
 [autoload]
 
-global="*res://global.gd"
+global="*res://scripts/global.gd"
 
 [debug]
 
@@ -50,4 +50,3 @@ common/enable_object_picking=false
 
 threads/thread_model=2
 environment/default_clear_color=Color( 0, 0, 0, 1 )
-environment/default_environment="res://default_env.tres"

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://menu_button_style.tres" type="StyleBox" id=1]
-[ext_resource path="res://font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://styles/menu_button_style.tres" type="StyleBox" id=1]
+[ext_resource path="res://fonts/font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/MainMenu.gd" type="Script" id=3]
 
 [node name="MainMenu" type="Control"]
