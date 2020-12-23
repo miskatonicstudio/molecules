@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Ball.tscn" type="PackedScene" id=2]
 [ext_resource path="res://MainMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://font.tres" type="DynamicFont" id=4]
 
 [sub_resource type="ConcavePolygonShape2D" id=1]
 segments = PoolVector2Array( 0, 0, 1280, 0, 1280, 720, 0, 720, 1280, 0, 1280, 720, 0, 0, 0, 720 )
@@ -42,6 +43,27 @@ radius = 40.0
 [node name="Ball5" parent="Balls" instance=ExtResource( 2 )]
 position = Vector2( 512, 130 )
 radius = 40.0
+
+[node name="Message" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1280.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 1280, 720 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Message"]
+margin_left = 640.0
+margin_top = 343.0
+margin_right = 640.0
+margin_bottom = 376.0
+custom_fonts/font = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MainMenu" parent="." instance=ExtResource( 3 )]
 visible = false

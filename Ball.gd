@@ -8,12 +8,10 @@ onready var area_node = $Area
 onready var area_shape = $Area/Shape
 onready var sprite = $Sprite
 
-const MINIMAL_MAIN_BALL_RADIUS = 5
-const PROPELLING_AREA = 0.1
-const PROPELLING_FORCE = 2
-const PROPELLING_DAMP = 0.02
-const MIN_PROPELLING = 0.01
-
+const MIN_PROPELLING_AREA = 0.0004
+const MAX_PROPELLING_AREA = 0.0008
+const SMALL_PROPELLING_FORCE = 150
+const LARGE_PROPELLING_FORCE = 3
 const COLOR_VECTOR_MIN = Vector3(1, 0.25, 0)
 const COLOR_VECTOR_MAX = Vector3(0, 0.75, 1)
 
@@ -24,13 +22,13 @@ var is_propelling = false
 func _ready():
 	shape.shape = CircleShape2D.new()
 	area_shape.shape = CircleShape2D.new()
-	set_radius(radius)
 	if is_main_ball:
 		global.main_ball = self
+		set_radius(radius)
 	else:
 		global.connect("main_ball_resized", self, "adjust_color")
-		if global.main_ball:
-			adjust_color()
+		set_radius(radius)
+		adjust_color()
 
 
 func _input(_event):
@@ -40,7 +38,7 @@ func _input(_event):
 
 func adjust_color():
 	var c = 1
-	if global.main_ball.radius > 0:
+	if global.main_ball and global.main_ball.radius > 0:
 		c = self.radius / (global.main_ball.radius * 2)
 		c = clamp(c, 0, 1)
 	var color_vector = COLOR_VECTOR_MIN * c + COLOR_VECTOR_MAX * (1 - c)
@@ -53,19 +51,15 @@ func set_radius(value):
 		shape.shape.radius = value
 		area_shape.shape.radius = value
 		# TODO: improve graphics or extract to a constant
-		sprite.scale = Vector2(value * 2 / 2000, value * 2 / 2000)
-	if is_main_ball:
-		# TODO: improve resized signal
-		global.main_ball_resized()
-
-
-func absorbs(another_ball):
-	# TODO: improve or simplify this
-#	return radius <= self.radius
-	var absorb = self.radius > another_ball.radius
-	if self.radius == another_ball.radius:
-		absorb = self.get_rid().get_id() > another_ball.get_rid().get_id()
-	return absorb
+		var scale = value * 2 / 2000
+		sprite.scale = Vector2(scale, scale)
+		
+		if is_main_ball:
+			# TODO: improve resized signal
+			global.main_ball_resized()
+	
+	if radius <= 0:
+		queue_free()
 
 
 func _area_to_radius(a: float) -> float:
@@ -79,7 +73,8 @@ func _radius_to_area(r: float) -> float:
 
 
 func add_area(area: float, area_linear_velocity: Vector2) -> void:
-	assert(area >= 0)
+	if area <= 0:
+		return
 	var current_area = _radius_to_area(self.radius)
 	var new_area = current_area + area
 	var new_velocity = (
@@ -91,72 +86,63 @@ func add_area(area: float, area_linear_velocity: Vector2) -> void:
 	self.linear_velocity = new_velocity
 
 
-func _process(delta):
-	if is_propelling:
-		propel(
-			get_viewport().get_mouse_position() - self.position,
-			delta
-		)
-	
-	if self.linear_damp > 0:
-		self.linear_damp = max(0, self.linear_damp - delta)
-	
-	if (radius <= MINIMAL_MAIN_BALL_RADIUS and is_main_ball) or radius < 0:
-		queue_free()
-
-
 func _physics_process(_delta):
+	# TODO: fix performance during long clicks
+	if is_propelling:
+		self.propel(get_viewport().get_mouse_position() - self.position)
+
+
+func _process(_delta):
 	var overlapping_balls = []
 	for a in area_node.get_overlapping_areas():
-		overlapping_balls.append(a.get_parent())
+		var ball = a.get_parent()
+		if ball.radius < self.radius and ball.radius >= 0:
+			overlapping_balls.append(ball)
 	
-	for ball in overlapping_balls:
-		if ball.radius <= 0:
+	for small in overlapping_balls:
+		var distance = self.position.distance_to(small.position)
+		var radius_difference = self.radius + small.radius - distance
+		# TODO: this should not happen, but it happens sometimes
+		if radius_difference < 0:
 			continue
-		var distance = self.position.distance_to(ball.position)
-		var radius_difference = self.radius + ball.radius - distance
-		if radius_difference <= 0:
-			continue
-		radius_difference *= 0.5
-		
-		var small = null
-		var large = null
-		
-		if absorbs(ball):
-			large = self
-			small = ball
-		else:
-			large = ball
-			small = self
-		
 		var small_area = _radius_to_area(small.radius)
 		
-		var small_radius_reduced = max(0, small.radius - radius_difference)
+		var small_radius_reduced = max(
+			0, small.radius - radius_difference
+		)
 		
 		var small_area_reduced = _radius_to_area(small_radius_reduced)
 		var area_delta = small_area - small_area_reduced
 		
 		small.radius = small_radius_reduced
-		large.add_area(area_delta, small.linear_velocity)
-		
-		if self.radius <= 0:
-			return
+		self.add_area(area_delta, small.linear_velocity)
 
-func propel(direction: Vector2, delta: float = 1) -> void:
+
+func propel(direction: Vector2) -> void:
+	if self.radius <= 0:
+		return
+	
 	direction = direction.normalized()
 	var current_area = _radius_to_area(self.radius)
-	var propelling_area = current_area * PROPELLING_AREA * delta
+	var propelling_area = current_area * rand_range(
+		MIN_PROPELLING_AREA, MAX_PROPELLING_AREA
+	)
 	var new_area = current_area - propelling_area
 	
-	var propelling_ball = ball_scene.instance()
-	propelling_ball.linear_damp = PROPELLING_DAMP
-	propelling_ball.radius = _area_to_radius(propelling_area)
-	propelling_ball.position = self.position + direction * (
-		self.radius + propelling_ball.radius
-	)
 	self.radius = _area_to_radius(new_area)
 	
-	get_parent().call_deferred("add_child_below_node", self, propelling_ball)# (self, propelling_ball)
+	var propelling_ball = ball_scene.instance()
+	propelling_ball.radius = _area_to_radius(propelling_area)
+	propelling_ball.position = self.position + direction * (
+		self.radius + propelling_ball.radius + 5
+	)
 	
-	propelling_ball.apply_central_impulse(direction * PROPELLING_FORCE)
-	self.apply_central_impulse(-direction * PROPELLING_FORCE)
+	propelling_ball.apply_central_impulse(
+		direction * SMALL_PROPELLING_FORCE
+	)
+	self.apply_central_impulse(
+		-direction * LARGE_PROPELLING_FORCE
+	)
+	get_parent().call_deferred(
+		"add_child_below_node", self, propelling_ball
+	)

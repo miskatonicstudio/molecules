@@ -2,16 +2,20 @@ extends Node2D
 
 onready var balls = $Balls
 onready var main_menu = $MainMenu
+onready var message_label = $Message/Label
 
 var ball_scene = load("res://Ball.tscn")
 
 
 func _ready():
-	generate_balls()
+#	generate_balls()
 	main_menu.connect("request_new_balls", self, "generate_balls")
+	global.connect("main_ball_resized", self, "_on_main_ball_resized")
 
 
 func generate_balls():
+	message_label.text = ""
+	
 	for child in balls.get_children():
 		balls.remove_child(child)
 		child.queue_free()
@@ -66,3 +70,9 @@ func _generate_single_ball(r, existing_balls):
 				found = false
 				break
 	return [p, r]
+
+
+func _on_main_ball_resized():
+	if global.main_ball.radius <= 0:
+		message_label.text = "You lost"
+		print("LOST")

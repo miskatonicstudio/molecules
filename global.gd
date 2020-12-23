@@ -2,7 +2,6 @@ extends Node
 
 var main_ball = null
 
-
 signal main_ball_resized
 
 
