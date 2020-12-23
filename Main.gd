@@ -5,6 +5,10 @@ onready var main_menu = $MainMenu
 onready var message_label = $Message/Label
 
 var ball_scene = load("res://Ball.tscn")
+var screen_size = Vector2(
+	ProjectSettings.get("display/window/size/width"),
+	ProjectSettings.get("display/window/size/height")
+)
 
 
 func _ready():
@@ -22,7 +26,7 @@ func generate_balls():
 	
 	var main_ball = ball_scene.instance()
 	main_ball.is_main_ball = true
-	main_ball.position = OS.window_size * 0.5
+	main_ball.position = screen_size * 0.5
 	balls.add_child(main_ball)
 	
 	var placeholder_balls = _generate_placeholder_balls(main_ball)
@@ -57,7 +61,6 @@ func _generate_placeholder_balls(main_ball):
 
 
 func _generate_single_ball(r, existing_balls):
-	var screen_size = OS.window_size
 	var p = null
 	var found = false
 	while not found:
