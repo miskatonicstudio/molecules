@@ -1,33 +1,34 @@
 extends Node2D
 
-onready var balls = $Balls
+onready var molecules = $Molecules
 onready var main_menu = $MainMenu
 onready var message_label = $Message/Label
 onready var music = $Music
 
-var ball_scene = load("res://scenes/Molecule.tscn")
+var molecule_scene = load("res://scenes/Molecule.tscn")
 var screen_size = Vector2(
 	ProjectSettings.get("display/window/size/width"),
 	ProjectSettings.get("display/window/size/height")
 )
-# Total area of all molecules
-var total_ball_area = 0
+var total_molecule_mass = 0
 
 
 func _ready():
+	# Pause the game for tutorial
 	get_tree().paused = true
 	randomize()
-	main_menu.connect("request_new_balls", self, "generate_balls")
+	main_menu.connect("request_new_level", self, "generate_molecules")
 	main_menu.connect("request_music", self, "_on_request_music")
-	global.connect("main_ball_resized", self, "_on_main_ball_resized")
+	global.connect("main_molecule_resized", self, "_on_main_molecule_resized")
 	
-	for ball in balls.get_children():
-		total_ball_area += ball.area
+	for molecule in molecules.get_children():
+		total_molecule_mass += molecule.molecule_mass
 	# In tutorial, ensure that the biggest molecule has to be absorbed too
-	total_ball_area *= 1.5
+	total_molecule_mass *= 1.5
 
 
 func _input(_event):
+	# Unpause the game in tutorial
 	if len(message_label.text) > 20:
 		if (
 			Input.is_action_just_pressed("propel") or 
@@ -37,61 +38,69 @@ func _input(_event):
 			get_tree().paused = false
 
 
-func generate_balls():
-	total_ball_area = 0
+func generate_molecules():
+	total_molecule_mass = 0
 	message_label.text = ""
 	
-	for child in balls.get_children():
-		balls.remove_child(child)
-		child.queue_free()
+	for molecule in molecules.get_children():
+		molecules.remove_child(molecule)
+		molecule.queue_free()
 	
-	var main_ball = ball_scene.instance()
-	main_ball.is_main_ball = true
-	main_ball.position = screen_size * 0.5
+	var main_molecule = molecule_scene.instance()
+	main_molecule.is_main = true
+	main_molecule.position = screen_size * 0.5
 	
-	var placeholder_balls = _generate_placeholder_balls(main_ball)
-	for pb in placeholder_balls:
-		var ball = ball_scene.instance()
-		ball.position = pb[0]
-		balls.add_child(ball)
-		ball.radius = pb[1]
-		total_ball_area += ball.area
-	balls.add_child(main_ball)
-	total_ball_area += main_ball.area
+	var placeholder_molecules = _generate_placeholder_molecules(main_molecule)
+	for pm in placeholder_molecules:
+		var molecule = molecule_scene.instance()
+		molecule.position = pm[0]
+		molecules.add_child(molecule)
+		molecule.radius = float(pm[1])
+		total_molecule_mass += molecule.molecule_mass
+	
+	molecules.add_child(main_molecule)
+	total_molecule_mass += main_molecule.molecule_mass
 
 
-func _generate_placeholder_balls(main_ball):
-	var generated_balls = []
-	generated_balls.append([main_ball.position, main_ball.radius])
+func _generate_placeholder_molecules(main_molecule):
+	var generated_molecules = []
+	# Add the main molecule, so it can be avoided
+	generated_molecules.append([main_molecule.position, main_molecule.radius])
 	
 	for radius in range(72, 4, -1):
-		var ball = _generate_single_ball(float(radius), generated_balls)
-		generated_balls.append(ball)
+		var molecule = _generate_single_molecule(radius, generated_molecules)
+		generated_molecules.append(molecule)
 	
-	generated_balls.pop_front()
-	return generated_balls
+	# Remove the main molecule
+	generated_molecules.pop_front()
+	return generated_molecules
 
 
-func _generate_single_ball(r, existing_balls):
-	var p = null
+func _generate_single_molecule(radius, existing_molecules) -> Array:
+	"""
+	Generates a single molecule with the given radius, making sure
+	that it doesn't overlap the existing ones. Results are returned
+	as [position, radius]
+	"""
+	var position = null
 	var found = false
 	while not found:
 		found = true
-		var rand_x = rand_range(r, screen_size.x - r)
-		var rand_y = rand_range(r, screen_size.y - r)
-		p = Vector2(rand_x, rand_y)
-		for ball in existing_balls:
-			if p.distance_to(ball[0]) <= r + ball[1]:
+		var rand_x = rand_range(radius, screen_size.x - radius)
+		var rand_y = rand_range(radius, screen_size.y - radius)
+		position = Vector2(rand_x, rand_y)
+		for molecule in existing_molecules:
+			if position.distance_to(molecule[0]) <= radius + molecule[1]:
 				found = false
 				break
-	return [p, r]
+	return [position, radius]
 
 
-func _on_main_ball_resized() -> void:
-	if global.main_ball.radius <= 0:
+func _on_main_molecule_resized() -> void:
+	if global.main_molecule.radius <= 0:
 		message_label.text = "You lost"
 	else:
-		if global.main_ball.area > total_ball_area * 0.5:
+		if global.main_molecule.molecule_mass > total_molecule_mass * 0.5:
 			message_label.text = "You won!"
 
 

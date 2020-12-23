@@ -1,6 +1,6 @@
 extends Control
 
-signal request_new_balls
+signal request_new_level
 signal request_music
 
 var music_enabled = true
@@ -25,7 +25,7 @@ func toggle_visibility():
 
 
 func _on_New_pressed():
-	emit_signal("request_new_balls")
+	emit_signal("request_new_level")
 	toggle_visibility()
 
 

@@ -24,32 +24,32 @@ collision_layer = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
 shape = SubResource( 1 )
 
-[node name="Balls" type="Node2D" parent="."]
+[node name="Molecules" type="Node2D" parent="."]
 
-[node name="Main" parent="Balls" instance=ExtResource( 5 )]
-position = Vector2( 640, 360 )
-radius = 60.0
-is_main_ball = true
-
-[node name="Ball1" parent="Balls" instance=ExtResource( 5 )]
+[node name="Molecule1" parent="Molecules" instance=ExtResource( 5 )]
 position = Vector2( 1000, 360 )
 radius = 80.0
 
-[node name="Ball2" parent="Balls" instance=ExtResource( 5 )]
+[node name="Molecule2" parent="Molecules" instance=ExtResource( 5 )]
 position = Vector2( 300, 260 )
 radius = 40.0
 
-[node name="Ball3" parent="Balls" instance=ExtResource( 5 )]
+[node name="Molecule3" parent="Molecules" instance=ExtResource( 5 )]
 position = Vector2( 300, 460 )
 radius = 40.0
 
-[node name="Ball4" parent="Balls" instance=ExtResource( 5 )]
+[node name="Molecule4" parent="Molecules" instance=ExtResource( 5 )]
 position = Vector2( 640, 560 )
 radius = 40.0
 
-[node name="Ball5" parent="Balls" instance=ExtResource( 5 )]
+[node name="Molecule5" parent="Molecules" instance=ExtResource( 5 )]
 position = Vector2( 640, 160 )
 radius = 40.0
+
+[node name="Main" parent="Molecules" instance=ExtResource( 5 )]
+position = Vector2( 640, 360 )
+radius = 60.0
+is_main = true
 
 [node name="Message" type="CenterContainer" parent="."]
 anchor_right = 1.0

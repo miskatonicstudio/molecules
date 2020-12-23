@@ -44,6 +44,8 @@ propel={
 
 [physics]
 
+2d/default_gravity=0
+2d/default_gravity_vector=Vector2( 0, 0 )
 common/enable_object_picking=false
 
 [rendering]
