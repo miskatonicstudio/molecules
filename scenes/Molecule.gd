@@ -7,14 +7,14 @@ export (bool) var is_main = false
 onready var shape = $Shape
 onready var area_node = $Area
 onready var area_shape = $Area/Shape
-onready var sprite = $Sprite
+onready var mesh = $Mesh
 
 const MIN_PROPELLING_MASS = 0.0008
 const MAX_PROPELLING_MASS = 0.0016
 const SMALL_PROPELLING_FORCE = 150
 const LARGE_PROPELLING_FORCE = 3
-const COLOR_VECTOR_MIN = Vector3(1, 0.25, 0)
-const COLOR_VECTOR_MAX = Vector3(0, 0.75, 1)
+const COLOR_VECTOR_MIN = Color(1, 0.25, 0)
+const COLOR_VECTOR_MAX = Color(0, 0.75, 1)
 
 # Using RigidBody2D.mass has some undesired implications
 var molecule_mass
@@ -22,6 +22,9 @@ var molecule_scene = load("res://scenes/Molecule.tscn")
 
 
 func _ready():
+	mesh.material = mesh.material.duplicate()
+	mesh.material.set_shader_param("offset", randf())
+	
 	shape.shape = CircleShape2D.new()
 	area_shape.shape = CircleShape2D.new()
 	if is_main:
@@ -43,7 +46,7 @@ func adjust_color() -> void:
 		c = self.radius / (global.main_molecule.radius * 2)
 		c = clamp(c, 0, 1)
 	var color_vector = COLOR_VECTOR_MIN * c + COLOR_VECTOR_MAX * (1 - c)
-	modulate = Color(color_vector.x, color_vector.y, color_vector.z)
+	mesh.material.set_shader_param("color", color_vector)
 
 
 func set_radius(value):
@@ -52,9 +55,8 @@ func set_radius(value):
 	if is_inside_tree():
 		shape.shape.radius = value
 		area_shape.shape.radius = value
-		# TODO: improve graphics or extract to a constant
-		var scale = value * 2 / 2000
-		sprite.scale = Vector2(scale, scale)
+		var scale = value * 2
+		mesh.scale = Vector2(scale, scale)
 		
 		if is_main:
 			# TODO: improve resized signal
