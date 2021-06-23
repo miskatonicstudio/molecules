@@ -1,4 +1,4 @@
-![Molecules screenshot](https://user-images.githubusercontent.com/36821133/103091488-9d665c00-45f4-11eb-8d76-23d972195245.gif)
+![Molecules screenshot](https://user-images.githubusercontent.com/36821133/123157862-5bb35280-d46b-11eb-98b1-579123c838c6.gif)
 
 # Molecules ![Godot v3.2](https://img.shields.io/badge/godot-v3.2-%23478cbf)
 
