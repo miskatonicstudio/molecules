@@ -1,1 +1,10 @@
 .import
+
+# Binary / HTML
+*.pck
+*.exe
+*.x86_64
+*.zip
+*.js
+*.html
+*.wasm
