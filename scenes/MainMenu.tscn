@@ -9,9 +9,6 @@ pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -30,55 +27,65 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 margin_left = 490.0
-margin_top = 193.0
+margin_top = 179.0
 margin_right = 790.0
-margin_bottom = 527.0
+margin_bottom = 541.0
 rect_min_size = Vector2( 300, 0 )
 custom_constants/separation = 14
 
 [node name="Back" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_right = 300.0
 margin_bottom = 73.0
+custom_fonts/font = ExtResource( 2 )
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-custom_fonts/font = ExtResource( 2 )
 text = "Resume"
 
 [node name="New" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 87.0
 margin_right = 300.0
 margin_bottom = 160.0
+custom_fonts/font = ExtResource( 2 )
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-custom_fonts/font = ExtResource( 2 )
 text = "New level"
 
 [node name="Music" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 174.0
 margin_right = 300.0
 margin_bottom = 247.0
+custom_fonts/font = ExtResource( 2 )
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-custom_fonts/font = ExtResource( 2 )
 text = "Music: On"
 
 [node name="Quit" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 261.0
 margin_right = 300.0
 margin_bottom = 334.0
+custom_fonts/font = ExtResource( 2 )
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-custom_fonts/font = ExtResource( 2 )
 text = "Quit"
+
+[node name="LinkButton" type="LinkButton" parent="CenterContainer/VBoxContainer"]
+margin_left = 20.0
+margin_top = 348.0
+margin_right = 279.0
+margin_bottom = 362.0
+size_flags_horizontal = 4
+text = "github.com/miskatonicstudio/molecules"
+
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/New" to="." method="_on_New_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Music" to="." method="_on_Music_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/LinkButton" to="." method="_on_LinkButton_pressed"]

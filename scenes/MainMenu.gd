@@ -34,3 +34,7 @@ func _on_Music_pressed():
 	var text = "Music: On" if music_enabled else "Music: Off"
 	$CenterContainer/VBoxContainer/Music.text = text
 	emit_signal("request_music", music_enabled)
+
+
+func _on_LinkButton_pressed():
+	OS.shell_open("https://github.com/miskatonicstudio/molecules")
