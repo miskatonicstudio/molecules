@@ -1,13 +1,13 @@
 extends RigidBody2D
 
-export (float) var radius = 30.0 setget set_radius
+@export var radius = 30.0 : set = set_radius
 # Main molecule is the one controlled by the player
-export (bool) var is_main = false
+@export var is_main = false
 
-onready var shape = $Shape
-onready var area_node = $Area
-onready var area_shape = $Area/Shape
-onready var mesh = $Mesh
+@onready var shape = $Shape3D
+@onready var area_node = $Area3D
+@onready var area_shape = $Area3D/Shape3D
+@onready var mesh = $Mesh
 
 const MIN_PROPELLING_MASS = 0.0008
 const MAX_PROPELLING_MASS = 0.0016
@@ -23,7 +23,7 @@ var molecule_scene = load("res://scenes/Molecule.tscn")
 
 func _ready():
 	mesh.material = mesh.material.duplicate()
-	mesh.material.set_shader_param("offset", randf())
+	mesh.material.set_shader_parameter("offset", randf())
 	
 	shape.shape = CircleShape2D.new()
 	area_shape.shape = CircleShape2D.new()
@@ -31,7 +31,7 @@ func _ready():
 		global.main_molecule = self
 		set_radius(radius)
 	else:
-		global.connect("main_molecule_resized", self, "adjust_color")
+		global.main_molecule_resized.connect(self.adjust_color)
 		set_radius(radius)
 		adjust_color()
 
@@ -46,7 +46,7 @@ func adjust_color() -> void:
 		c = self.radius / (global.main_molecule.radius * 2)
 		c = clamp(c, 0, 1)
 	var color_vector = COLOR_VECTOR_MIN * c + COLOR_VECTOR_MAX * (1 - c)
-	mesh.material.set_shader_param("color", color_vector)
+	mesh.material.set_shader_parameter("color", color_vector)
 
 
 func set_radius(value):
@@ -130,14 +130,14 @@ func propel(direction: Vector2) -> void:
 		return
 	
 	direction = direction.normalized()
-	var propelling_mass = self.molecule_mass * rand_range(
+	var propelling_mass = self.molecule_mass * randf_range(
 		MIN_PROPELLING_MASS, MAX_PROPELLING_MASS
 	)
 	var new_mass = self.molecule_mass - propelling_mass
 	
 	self.radius = _mass_to_radius(new_mass)
 	
-	var propelling_molecule = molecule_scene.instance()
+	var propelling_molecule = molecule_scene.instantiate()
 	propelling_molecule.radius = _mass_to_radius(propelling_mass)
 	# TODO: use a constant here
 	propelling_molecule.position = self.position + direction * (
@@ -150,6 +150,4 @@ func propel(direction: Vector2) -> void:
 	self.apply_central_impulse(
 		-direction * LARGE_PROPELLING_FORCE
 	)
-	get_parent().call_deferred(
-		"add_child_below_node", self, propelling_molecule
-	)
+	self.add_sibling.call_deferred(propelling_molecule)
