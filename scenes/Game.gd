@@ -1,14 +1,14 @@
 extends Node2D
 
-onready var molecules = $Molecules
-onready var main_menu = $MainMenu
-onready var message_label = $Message/Label
-onready var music = $Music
+@onready var molecules = $Molecules
+@onready var main_menu = $MainMenu
+@onready var message_label = $Message/Label
+@onready var music = $Music
 
 var molecule_scene = load("res://scenes/Molecule.tscn")
 var screen_size = Vector2(
-	ProjectSettings.get("display/window/size/width"),
-	ProjectSettings.get("display/window/size/height")
+	ProjectSettings.get("display/window/size/viewport_width"),
+	ProjectSettings.get("display/window/size/viewport_height")
 )
 var total_molecule_mass = 0
 
@@ -17,9 +17,9 @@ func _ready():
 	# Pause the game for tutorial
 	get_tree().paused = true
 	randomize()
-	main_menu.connect("request_new_level", self, "generate_molecules")
-	main_menu.connect("request_music", self, "_on_request_music")
-	global.connect("main_molecule_resized", self, "_on_main_molecule_resized")
+	main_menu.request_new_level.connect(self.generate_molecules)
+	main_menu.request_music.connect(self._on_request_music)
+	global.main_molecule_resized.connect(self._on_main_molecule_resized)
 	
 	for molecule in molecules.get_children():
 		total_molecule_mass += molecule.molecule_mass
@@ -45,13 +45,13 @@ func generate_molecules():
 		molecules.remove_child(molecule)
 		molecule.queue_free()
 	
-	var main_molecule = molecule_scene.instance()
+	var main_molecule = molecule_scene.instantiate()
 	main_molecule.is_main = true
 	main_molecule.position = screen_size * 0.5
 	
 	var placeholder_molecules = _generate_placeholder_molecules(main_molecule)
 	for pm in placeholder_molecules:
-		var molecule = molecule_scene.instance()
+		var molecule = molecule_scene.instantiate()
 		molecule.position = pm[0]
 		molecules.add_child(molecule)
 		molecule.radius = float(pm[1])
@@ -85,8 +85,8 @@ func _generate_single_molecule(radius, existing_molecules) -> Array:
 	var found = false
 	while not found:
 		found = true
-		var rand_x = rand_range(radius, screen_size.x - radius)
-		var rand_y = rand_range(radius, screen_size.y - radius)
+		var rand_x = randf_range(radius, screen_size.x - radius)
+		var rand_y = randf_range(radius, screen_size.y - radius)
 		position = Vector2(rand_x, rand_y)
 		for molecule in existing_molecules:
 			if position.distance_to(molecule[0]) <= radius + molecule[1]:

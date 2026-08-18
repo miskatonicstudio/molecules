@@ -1,73 +1,69 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://dkvfngh4dwle8"]
 
-[ext_resource path="res://fonts/font.tres" type="DynamicFont" id=1]
-[ext_resource path="res://scenes/Game.gd" type="Script" id=2]
-[ext_resource path="res://assets/sounds/ambient.ogg" type="AudioStream" id=3]
-[ext_resource path="res://scenes/MainMenu.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/Molecule.tscn" type="PackedScene" id=5]
+[ext_resource type="Script" path="res://scenes/Game.gd" id="2"]
+[ext_resource type="AudioStream" uid="uid://8g0p783dq16u" path="res://assets/sounds/ambient.ogg" id="3"]
+[ext_resource type="PackedScene" uid="uid://juolc4l41hhr" path="res://scenes/MainMenu.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://bybmbpaj8jp45" path="res://scenes/Molecule.tscn" id="5"]
 
-[sub_resource type="ConcavePolygonShape2D" id=1]
-segments = PoolVector2Array( 0, 0, 1280, 0, 1280, 720, 0, 720, 1280, 0, 1280, 720, 0, 0, 0, 720 )
+[sub_resource type="ConcavePolygonShape2D" id="1"]
+segments = PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720, 1280, 0, 1280, 720, 0, 0, 0, 720)
 
 [node name="Game" type="Node2D"]
-pause_mode = 2
-script = ExtResource( 2 )
+process_mode = 3
+script = ExtResource("2")
 
 [node name="Frame" type="Line2D" parent="."]
-points = PoolVector2Array( 0, 0, 1280, 0, 1280, 720, 0, 720, 0, 0 )
+points = PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720, 0, 0)
 width = 4.0
-default_color = Color( 0, 0.6, 0.701961, 0.501961 )
+default_color = Color(0, 0.6, 0.701961, 0.501961)
 
 [node name="Walls" type="StaticBody2D" parent="."]
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
-shape = SubResource( 1 )
+shape = SubResource("1")
 
 [node name="Molecules" type="Node2D" parent="."]
 
-[node name="Molecule1" parent="Molecules" instance=ExtResource( 5 )]
-position = Vector2( 1000, 360 )
+[node name="Molecule1" parent="Molecules" instance=ExtResource("5")]
+position = Vector2(1000, 360)
 radius = 80.0
 
-[node name="Molecule2" parent="Molecules" instance=ExtResource( 5 )]
-position = Vector2( 300, 260 )
+[node name="Molecule2" parent="Molecules" instance=ExtResource("5")]
+position = Vector2(300, 260)
 radius = 40.0
 
-[node name="Molecule3" parent="Molecules" instance=ExtResource( 5 )]
-position = Vector2( 300, 460 )
+[node name="Molecule3" parent="Molecules" instance=ExtResource("5")]
+position = Vector2(300, 460)
 radius = 40.0
 
-[node name="Molecule4" parent="Molecules" instance=ExtResource( 5 )]
-position = Vector2( 640, 560 )
+[node name="Molecule4" parent="Molecules" instance=ExtResource("5")]
+position = Vector2(640, 560)
 radius = 40.0
 
-[node name="Molecule5" parent="Molecules" instance=ExtResource( 5 )]
-position = Vector2( 640, 160 )
+[node name="Molecule5" parent="Molecules" instance=ExtResource("5")]
+position = Vector2(640, 160)
 radius = 40.0
 
-[node name="Main" parent="Molecules" instance=ExtResource( 5 )]
-position = Vector2( 640, 360 )
+[node name="Main" parent="Molecules" instance=ExtResource("5")]
+position = Vector2(640, 360)
 radius = 60.0
 is_main = true
 
 [node name="Message" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(1280, 720)
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 1280.0
-margin_bottom = 720.0
-rect_min_size = Vector2( 1280, 720 )
+offset_right = 1280.0
+offset_bottom = 720.0
 mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="Message"]
-margin_left = 156.0
-margin_top = 163.0
-margin_right = 1123.0
-margin_bottom = 556.0
-custom_fonts/font = ExtResource( 1 )
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
 text = "Bigger molecules absorb smaller ones.
 
 Your goal is to become the biggest molecule.
@@ -79,20 +75,16 @@ Hold the LMB for faster propulsion.
 Keep in mind that propelling reduces your mass and makes you smaller.
 
 [Press RMB to continue]"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+horizontal_alignment = 1
 
-[node name="MainMenu" parent="." instance=ExtResource( 4 )]
+[node name="MainMenu" parent="." instance=ExtResource("4")]
 visible = false
-margin_right = 1230.0
-margin_bottom = 682.0
-rect_min_size = Vector2( 1280, 720 )
+custom_minimum_size = Vector2(1280, 720)
+offset_right = 1230.0
+offset_bottom = 682.0
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-pause_mode = 2
-stream = ExtResource( 3 )
+process_mode = 3
+stream = ExtResource("3")
 volume_db = -20.0
 autoplay = true

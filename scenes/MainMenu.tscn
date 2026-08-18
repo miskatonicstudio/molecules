@@ -1,86 +1,73 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://juolc4l41hhr"]
 
-[ext_resource path="res://styles/menu_button_style.tres" type="StyleBox" id=1]
-[ext_resource path="res://fonts/font.tres" type="DynamicFont" id=2]
-[ext_resource path="res://scenes/MainMenu.gd" type="Script" id=3]
+[ext_resource type="StyleBox" path="res://styles/menu_button_style.tres" id="2_2v0er"]
+[ext_resource type="Script" path="res://scenes/MainMenu.gd" id="3"]
 
 [node name="MainMenu" type="Control"]
-pause_mode = 2
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 3 )
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.501961 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+color = Color(0, 0, 0, 0.501961)
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 490.0
-margin_top = 179.0
-margin_right = 790.0
-margin_bottom = 541.0
-rect_min_size = Vector2( 300, 0 )
-custom_constants/separation = 14
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_constants/separation = 14
 
 [node name="Back" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_right = 300.0
-margin_bottom = 73.0
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = ExtResource( 1 )
-custom_styles/pressed = ExtResource( 1 )
-custom_styles/focus = ExtResource( 1 )
-custom_styles/normal = ExtResource( 1 )
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_2v0er")
+theme_override_styles/hover = ExtResource("2_2v0er")
 text = "Resume"
 
 [node name="New" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 87.0
-margin_right = 300.0
-margin_bottom = 160.0
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = ExtResource( 1 )
-custom_styles/pressed = ExtResource( 1 )
-custom_styles/focus = ExtResource( 1 )
-custom_styles/normal = ExtResource( 1 )
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_2v0er")
+theme_override_styles/hover = ExtResource("2_2v0er")
 text = "New level"
 
 [node name="Music" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 174.0
-margin_right = 300.0
-margin_bottom = 247.0
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = ExtResource( 1 )
-custom_styles/pressed = ExtResource( 1 )
-custom_styles/focus = ExtResource( 1 )
-custom_styles/normal = ExtResource( 1 )
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_2v0er")
+theme_override_styles/hover = ExtResource("2_2v0er")
 text = "Music: On"
 
 [node name="Quit" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 261.0
-margin_right = 300.0
-margin_bottom = 334.0
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = ExtResource( 1 )
-custom_styles/pressed = ExtResource( 1 )
-custom_styles/focus = ExtResource( 1 )
-custom_styles/normal = ExtResource( 1 )
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_2v0er")
+theme_override_styles/hover = ExtResource("2_2v0er")
 text = "Quit"
 
 [node name="LinkButton" type="LinkButton" parent="CenterContainer/VBoxContainer"]
-margin_left = 20.0
-margin_top = 348.0
-margin_right = 279.0
-margin_bottom = 362.0
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
 size_flags_horizontal = 4
 text = "github.com/miskatonicstudio/molecules"
 

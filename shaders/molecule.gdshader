@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
-uniform vec4 color : hint_color;
-uniform sampler2D noise_texture : hint_albedo;
+uniform vec4 color : source_color;
+uniform sampler2D noise_texture : source_color, repeat_enable;
 // Random offset, to make each molecule look a bit differently
 uniform float offset : hint_range(0, 1) = 0.1;
 
